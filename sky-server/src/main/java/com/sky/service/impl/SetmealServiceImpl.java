@@ -94,7 +94,7 @@ public class SetmealServiceImpl implements SetmealService {
 
         return setmealVO;
     }
-
+    @Transactional
     @Override
     public void update(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
@@ -103,7 +103,9 @@ public class SetmealServiceImpl implements SetmealService {
         setmealMapper.update(setmeal);
 
         Long setmealId = setmealDTO.getId();
+
         setmealDishMapper.deleteBySetmealId(setmealId);
+
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         setmealDishes.forEach(setmealDish -> {
             setmealDish.setSetmealId(setmealId);
